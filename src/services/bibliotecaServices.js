@@ -22,5 +22,31 @@ module.exports = {
                   
             });
       });
-    }
+    },
+
+    inserir: (nome, editora, idioma, Autor, qtsPaginar, resumo ) => {
+        
+        return new Promise ((accept, reject) => { 
+            db.query('INSERT INTO tblbiblioteca(nome, editora, idioma, Autor, qtsPaginar, resumo) VALUES (?,?,?,?,?,?)',
+                     [nome, editora,idioma, Autor,qtsPaginar, resumo], 
+                     (error, result) =>{
+                        if(error) {reject (error); return; }
+                        accept (result.insertCodigo);
+                             
+            });
+      });
+    },
+        update: (nome, editora, idioma, Autor, qtsPaginar, resumo, codigo ) => {
+        return new Promise ((accept, reject) => { 
+            db.query('UPDATE tblbiblioteca SET  nome = ?, editora = ?, idioma = ?, Autor = ?, qtsPaginar=?, resumo=? WHERE codigo = ?',
+                     [nome, editora,idioma, Autor,qtsPaginar, resumo, codigo], 
+                     (error, result) =>{
+                        if(error) {reject (error); return; }
+                        accept (result);
+                             
+            });
+      });
+    },
+    
+  
 };
