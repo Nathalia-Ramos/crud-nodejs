@@ -14,23 +14,23 @@ module.exports = {
             })
         }
         res.json(json)
+
+        
      },
     
      buscarID: async (req, res) => {
-         
-   
         let json = {error: '', result:{}}
         
-        let codigo = req.params.codigo;
-        let livro = await bibliotecaServices.buscarID(codigo);
+        // Resgatando o ID
+        let id = req.params.id;
+        let livro = await bibliotecaServices.buscarID(id);
 
-        if(livro){
+        // Só vai entrar aqui se o livro for retornado pelo banco
+        if(livro) {
             json.result = livro;
-        }else{
-            res.json(json);
         }
 
-
+        res.json(json);
     },
 
     inserir: async (req, res) => {
@@ -44,8 +44,7 @@ module.exports = {
         let Autor      = req.body.Autor;
         let qtsPaginar = req.body.qtsPaginar;
         let resumo     = req.body.resumo;
-       
-
+      
         if(nome && editora && idioma && Autor && qtsPaginar && resumo){
             let livroCodigo = await bibliotecaServices.inserir(nome, editora, idioma, Autor, qtsPaginar, resumo);
             json.result = {
@@ -65,10 +64,9 @@ module.exports = {
     },
 
     update : async (req, res) => {
-
         let json = {error: '', result:{}};
 
-        let codigo     = req.body.codigo;
+        let id         = req.body.id;
         let nome       = req.body.nome;
         let editora    = req.body.editora;
         let idioma     = req.body.idioma;
@@ -76,10 +74,9 @@ module.exports = {
         let qtsPaginar = req.body.qtsPaginar;
         let resumo     = req.body.resumo;
 
-        if(codigo && nome && editora && idioma && Autor && qtsPaginar && resumo){
-            await bibliotecaServices.update(codigo,nome, editora, idioma, Autor, qtsPaginar, resumo);
+            await bibliotecaServices.update(id,nome, editora, idioma, Autor, qtsPaginar, resumo);
             json.result = {
-                codigo,
+                id,
                 nome,   
                 editora,
                 idioma,
@@ -87,12 +84,11 @@ module.exports = {
                 qtsPaginar,
                 resumo
             };
-        }else{
-            json.error = 'ERRO';
-        }
+       
+            
+        
 
             res.json(json);
-       
     }
 }
 

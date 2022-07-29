@@ -10,7 +10,7 @@ server.use(cors()); //coloca o servidor em uso chamando o cors
 server.use(express.json()) // habilita a entrada de dados em formato JSON
 server.use(express.urlencoded({extended: false})) // habilita o envio de imagens
 
-server.use('/api', router); //faz com que todos os endereços da rota tenha /api
+server.use('/api', router); //faz com que todos os endereços da rota tenha '/api'
 
 
 server.listen(8081,() => {

@@ -1,19 +1,24 @@
+const { parse } = require('dotenv');
+const res = require('express/lib/response');
 const db = require ('../db')
 
 module.exports = {
     buscarTodos: () =>{
         return new Promise ((accept, reject) => { 
-            db.query('SELECT * FROM tblbiblioteca' , (error, result) =>{
+            db.query('SELECT * FROM tblbiblioteca order by id desc' , (error, result) =>{
                 if(error) {reject (error); return};
                 accept (result);
             });
       });
     },
 
-    buscarID: (codigo) => {
+    buscarID: (id) => {
         return new Promise ((accept, reject) => { 
-            db.query('SELECT * FROM tblbiblioteca where codigo =  ? ' , [codigo], (error, result) =>{
-                if(error) {reject (error); return};
+            db.query('SELECT * FROM tblbiblioteca where id =  ? ' , [id], (error, result) =>{
+
+                accept(result[0])
+
+                if(error) {reject (error); return;}
                 if(result.lengh > 0){
                     accept (result[0]);
                 }else{
@@ -36,17 +41,17 @@ module.exports = {
             });
       });
     },
-        update: (nome, editora, idioma, Autor, qtsPaginar, resumo, codigo ) => {
+
+    update: (nome, editora, idioma, Autor, qtsPaginar, resumo, id ) => {
+                
         return new Promise ((accept, reject) => { 
-            db.query('UPDATE tblbiblioteca SET  nome = ?, editora = ?, idioma = ?, Autor = ?, qtsPaginar=?, resumo=? WHERE codigo = ?',
-                     [nome, editora,idioma, Autor,qtsPaginar, resumo, codigo], 
+            db.query('UPDATE tblbiblioteca SET  nome = ?, editora = ?, idioma = ?, Autor = ?, qtsPaginar=?, resumo=? WHERE id = ?',
+                     [nome, editora,idioma, Autor,qtsPaginar, resumo, id], 
                      (error, result) =>{
                         if(error) {reject (error); return; }
                         accept (result);
                              
             });
       });
-    },
-    
-  
+    },  
 };
