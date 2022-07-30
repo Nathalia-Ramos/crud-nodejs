@@ -29,8 +29,21 @@ module.exports = {
       });
     },
 
+    delete: (id) => {
+        return new Promise ((accept, reject) => {
+            db.query('DELETE FROM tblbiblioteca WHERE id = ?', [id], (error, result) => {
+                if(error) {reject (error); return;}
+                if(result.lengh > 0){
+                    accept (result[0]);
+                }else{
+                    accept(false);
+                }
+
+            });
+        });
+    },
+
     inserir: (nome, editora, idioma, Autor, qtsPaginar, resumo ) => {
-        
         return new Promise ((accept, reject) => { 
             db.query('INSERT INTO tblbiblioteca(nome, editora, idioma, Autor, qtsPaginar, resumo) VALUES (?,?,?,?,?,?)',
                      [nome, editora,idioma, Autor,qtsPaginar, resumo], 
@@ -42,14 +55,14 @@ module.exports = {
       });
     },
 
-    update: (nome, editora, idioma, Autor, qtsPaginar, resumo, id ) => {
-                
+
+    update: (id,nome, editora, idioma, Autor, qtsPaginar, resumo ) => {
         return new Promise ((accept, reject) => { 
-            db.query('UPDATE tblbiblioteca SET  nome = ?, editora = ?, idioma = ?, Autor = ?, qtsPaginar=?, resumo=? WHERE id = ?',
-                     [nome, editora,idioma, Autor,qtsPaginar, resumo, id], 
+            db.query('UPDATE tblbiblioteca SET  nome = ?, editora = ?, idioma = ?, Autor = ?, qtsPaginar=?, resumo=? WHERE id = ?', 
+                     [nome, editora,idioma, Autor,qtsPaginar, resumo], 
                      (error, result) =>{
                         if(error) {reject (error); return; }
-                        accept (result);
+                        accept(result);
                              
             });
       });

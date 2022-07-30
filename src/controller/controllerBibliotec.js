@@ -33,6 +33,21 @@ module.exports = {
         res.json(json);
     },
 
+    delete: async (req, res) => {
+        let json = {error: '', result:{}}
+        
+        //Resgatando o id
+        let id  = req.params.id;
+        let livro = await bibliotecaServices.delete(id);
+
+         // Só vai entrar aqui se o livro for retornado pelo banco
+         if(livro) {
+            json.result = livro;
+        }
+
+        res.json(json);
+    },
+
     inserir: async (req, res) => {
 
         let json = {error: '', result:{}};
@@ -46,6 +61,7 @@ module.exports = {
         let resumo     = req.body.resumo;
       
         if(nome && editora && idioma && Autor && qtsPaginar && resumo){
+      
             let livroCodigo = await bibliotecaServices.inserir(nome, editora, idioma, Autor, qtsPaginar, resumo);
             json.result = {
                 codigo: livroCodigo,
@@ -74,7 +90,8 @@ module.exports = {
         let qtsPaginar = req.body.qtsPaginar;
         let resumo     = req.body.resumo;
 
-            await bibliotecaServices.update(id,nome, editora, idioma, Autor, qtsPaginar, resumo);
+        if (nome ,editora,idioma , Autor , qtsPaginar, resumo) { 
+            await bibliotecaServices.update(id, nome, editora, idioma, Autor, qtsPaginar, resumo)    
             json.result = {
                 id,
                 nome,   
@@ -84,10 +101,7 @@ module.exports = {
                 qtsPaginar,
                 resumo
             };
-       
-            
-        
-
+        }
             res.json(json);
     }
 }

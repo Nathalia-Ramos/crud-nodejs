@@ -1,16 +1,16 @@
 
-const validate = (req, res, next) => {
+// const validate = (req, res, next) => {
 
-    console.log(req.body)
+//     console.log(req.body)
 
-    const { nome, editora, idioma, Autor, qtsPaginar, resumo } = req.body
+//     const { nome, editora, idioma, Autor, qtsPaginar, resumo } = req.body
 
-    if (nome && editora && idioma && Autor && qtsPaginar && resumo) {
-        next()
-    } else {
-        res.status(500).json({ error: '', message: "Deu ruim!" })
-    }
+//     if (nome && editora && idioma && Autor && qtsPaginar && resumo) {
+//         next()
+//     } else {
+//         res.status(500).json({ error: '', message: "Deu ruim!" })
+//     }
 
-}
+// }
 
-module.exports = validate
+// module.exports = validate
